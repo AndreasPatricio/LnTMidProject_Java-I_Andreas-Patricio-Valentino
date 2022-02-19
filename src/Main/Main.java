@@ -162,9 +162,15 @@ public class Main {
 		System.out.println("|-----------------------------------------------------------------------|");
 	}
 	
+	void empty() {
+		System.out.println("|-----------------------------------------------------------------------|");
+		System.out.println("|                      Tidak ada data karyawan                          |");
+		System.out.println("|-----------------------------------------------------------------------|");
+	}
+	
 	void viewKaryawan() {
 		if(data.isEmpty()) {
-			System.out.println("Data Kosong");
+			empty();
 		}
 		else {
 			display();
@@ -174,183 +180,181 @@ public class Main {
 	
 	void updateKaryawan() {
 		if(data.isEmpty()) {
-			System.out.println("Data Kosong");
+			empty();
 		}
 		else {
 			display();
-		}
-		
-		int nomor;
-		
-		System.out.print("Input nomor urutan karyawan yang ingin diupdate [input 0 untuk cancel]: ");
-		nomor = scan.nextInt();
-		
-		if(nomor == 0) {
-			System.out.println("Tidak jadi mengupdate data");
-		}
-		
-		else {
-			nomor -= 1;
-			String jabatan = data.get(nomor).getJabatan();
+			int nomor;
 			
-			String nama, gender, newJabatan, id = "";
-			double gaji;
+			System.out.print("Input nomor urutan karyawan yang ingin diupdate [input 0 untuk cancel]: ");
+			nomor = scan.nextInt();
 			
-			scan.nextLine();
-			
-			do {
-				System.out.print("Input nama karyawan [>= 3]: ");
-				nama = scan.nextLine();
-			}
-			while(nama.length() < 3);
-			
-			do {
-				System.out.print("Input jenis kelamin [Laki-laki | Perempuan] (Case Sensitive): ");
-				gender = scan.nextLine();
-			}
-			while(!gender.equals("Laki-laki") && !gender.equals("Perempuan"));
-			
-			do {
-				System.out.print("Input jabatan [Manager | Supervisor | Admin] (Case Sensitive): ");
-				newJabatan = scan.nextLine();
-			}
-			while(!newJabatan.equals("Manager") && !newJabatan.equals("Supervisor") && !newJabatan.equals("Admin"));
-			
-			for(int i = 0; i < 2; i++) {
-				id += (char)((Math.random() * 26) + 'A');
-			}
-			id += '-';
-			id += (int) (Math.random()*(10000 - 1000 + 1) + 1000);
-			
-			for(int j = 0; j < data.size(); j++) {
-				if(data.get(j).getId() == id) {
-					for(int i = 0; i < 2; i++) {
-						id += (char)((Math.random() * 26) + 'A');
-					}
-					id += '-';
-					id += (int) (Math.random()*(10000 - 1000 + 1) + 1000);
-				}
+			if(nomor == 0) {
+				System.out.println("Tidak jadi mengupdate data");
 			}
 			
-			if(newJabatan.equals(jabatan)) {
-				jabatan = newJabatan;
-				if(jabatan.equals("Manager")) {
-					gaji = 8000000;
-					data.set(nomor, new Manager(nama, gender, jabatan,id, gaji));
-				}
-				
-				else if(jabatan.equals("Supervisor")) {
-					gaji = 6000000;
-					data.set(nomor, new Supervisor(nama, gender, jabatan,id, gaji));
-				}
-				
-				else if(jabatan.equals("Admin")) {
-					gaji = 4000000;
-					data.set(nomor, new Admin(nama, gender, jabatan,id, gaji));
-				}
-			}
 			else {
-				if(jabatan.equals("Manager")) {
-					counterManager--;
+				nomor -= 1;
+				String jabatan = data.get(nomor).getJabatan();
+				
+				String nama, gender, newJabatan, id = "";
+				double gaji;
+				
+				scan.nextLine();
+				
+				do {
+					System.out.print("Input nama karyawan [>= 3]: ");
+					nama = scan.nextLine();
+				}
+				while(nama.length() < 3);
+				
+				do {
+					System.out.print("Input jenis kelamin [Laki-laki | Perempuan] (Case Sensitive): ");
+					gender = scan.nextLine();
+				}
+				while(!gender.equals("Laki-laki") && !gender.equals("Perempuan"));
+				
+				do {
+					System.out.print("Input jabatan [Manager | Supervisor | Admin] (Case Sensitive): ");
+					newJabatan = scan.nextLine();
+				}
+				while(!newJabatan.equals("Manager") && !newJabatan.equals("Supervisor") && !newJabatan.equals("Admin"));
+				
+				for(int i = 0; i < 2; i++) {
+					id += (char)((Math.random() * 26) + 'A');
+				}
+				id += '-';
+				id += (int) (Math.random()*(10000 - 1000 + 1) + 1000);
+				
+				for(int j = 0; j < data.size(); j++) {
+					if(data.get(j).getId() == id) {
+						for(int i = 0; i < 2; i++) {
+							id += (char)((Math.random() * 26) + 'A');
+						}
+						id += '-';
+						id += (int) (Math.random()*(10000 - 1000 + 1) + 1000);
+					}
 				}
 				
-				else if(jabatan.equals("Supervisor")) {
-					counterSupervisor--;
+				if(newJabatan.equals(jabatan)) {
+					jabatan = newJabatan;
+					if(jabatan.equals("Manager")) {
+						gaji = 8000000;
+						data.set(nomor, new Manager(nama, gender, jabatan,id, gaji));
+					}
+					
+					else if(jabatan.equals("Supervisor")) {
+						gaji = 6000000;
+						data.set(nomor, new Supervisor(nama, gender, jabatan,id, gaji));
+					}
+					
+					else if(jabatan.equals("Admin")) {
+						gaji = 4000000;
+						data.set(nomor, new Admin(nama, gender, jabatan,id, gaji));
+					}
 				}
-				
-				else if(jabatan.equals("Admin")) {
-					counterAdmin--;
-				}
-				
-				if(newJabatan.equals("Manager")) {
-					gaji = 8000000;
-					data.set(nomor, new Manager(nama, gender, newJabatan,id, gaji));
-					counterManager++;
-					int count = 0;
-					if(counterManager % 3 == 1 && counterManager != 1) {
-						System.out.print("Bonus sebesar 10% telah diberikan kepada karyawan dengan id");
-						for(int i = 0; i < data.size(); i++) {
-							if(data.get(i).getJabatan().equals("Manager")) {
-								if(count == (counterManager-1)) {
-									break;
+				else {
+					if(jabatan.equals("Manager")) {
+						counterManager--;
+					}
+					
+					else if(jabatan.equals("Supervisor")) {
+						counterSupervisor--;
+					}
+					
+					else if(jabatan.equals("Admin")) {
+						counterAdmin--;
+					}
+					
+					if(newJabatan.equals("Manager")) {
+						gaji = 8000000;
+						data.set(nomor, new Manager(nama, gender, newJabatan,id, gaji));
+						counterManager++;
+						int count = 0;
+						if(counterManager % 3 == 1 && counterManager != 1) {
+							System.out.print("Bonus sebesar 10% telah diberikan kepada karyawan dengan id");
+							for(int i = 0; i < data.size(); i++) {
+								if(data.get(i).getJabatan().equals("Manager")) {
+									if(count == (counterManager-1)) {
+										break;
+									}
+									else {
+										System.out.print(" "+data.get(i).getId());
+										data.set(i, new Manager(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 10)/ 100)));
+										count++;
+									}
+									scan.nextLine();
 								}
-								else {
-									System.out.print(" "+data.get(i).getId());
-									data.set(i, new Manager(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 10)/ 100)));
-									count++;
+							}
+						}
+					}
+					
+					else if(newJabatan.equals("Supervisor")) {
+						gaji = 6000000;
+						data.set(nomor, new Supervisor(nama, gender, newJabatan,id, gaji));
+						counterSupervisor++;
+						int count = 0;
+						if(counterSupervisor % 3 == 1 && counterSupervisor != 1) {
+							System.out.print("Bonus sebesar 7.5% telah diberikan kepada karyawan dengan id");
+							for(int i = 0; i < data.size(); i++) {
+								if(data.get(i).getJabatan().equals("Supervisor")) {
+									if(count == (counterSupervisor-1)) {
+										break;
+									}
+									else {
+										System.out.print(" "+data.get(i).getId());
+										data.set(i, new Supervisor(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 7.5)/ 100)));
+										count++;
+									}
+									scan.nextLine();
 								}
-								scan.nextLine();
+							}
+						}
+					}
+					
+					else if(newJabatan.equals("Admin")) {
+						gaji = 4000000;
+						data.set(nomor, new Admin(nama, gender, newJabatan,id, gaji));
+						counterAdmin++;
+						int count = 0;
+						if(counterAdmin % 3 == 1 && counterAdmin != 1) {
+							System.out.print("Bonus sebesar 10% telah diberikan kepada karyawan dengan id");
+							for(int i = 0; i < data.size(); i++) {
+								if(data.get(i).getJabatan().equals("Admin")) {
+									if(count == (counterAdmin-1)) {
+										break;
+									}
+									else {
+										System.out.print(" "+data.get(i).getId());
+										data.set(i, new Admin(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 5)/ 100)));
+										count++;
+									}
+									scan.nextLine();
+								}
 							}
 						}
 					}
 				}
 				
-				else if(newJabatan.equals("Supervisor")) {
-					gaji = 6000000;
-					data.set(nomor, new Supervisor(nama, gender, newJabatan,id, gaji));
-					counterSupervisor++;
-					int count = 0;
-					if(counterSupervisor % 3 == 1 && counterSupervisor != 1) {
-						System.out.print("Bonus sebesar 7.5% telah diberikan kepada karyawan dengan id");
-						for(int i = 0; i < data.size(); i++) {
-							if(data.get(i).getJabatan().equals("Supervisor")) {
-								if(count == (counterSupervisor-1)) {
-									break;
-								}
-								else {
-									System.out.print(" "+data.get(i).getId());
-									data.set(i, new Supervisor(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 7.5)/ 100)));
-									count++;
-								}
-								scan.nextLine();
-							}
-						}
-					}
-				}
-				
-				else if(newJabatan.equals("Admin")) {
-					gaji = 4000000;
-					data.set(nomor, new Admin(nama, gender, newJabatan,id, gaji));
-					counterAdmin++;
-					int count = 0;
-					if(counterAdmin % 3 == 1 && counterAdmin != 1) {
-						System.out.print("Bonus sebesar 10% telah diberikan kepada karyawan dengan id");
-						for(int i = 0; i < data.size(); i++) {
-							if(data.get(i).getJabatan().equals("Admin")) {
-								if(count == (counterAdmin-1)) {
-									break;
-								}
-								else {
-									System.out.print(" "+data.get(i).getId());
-									data.set(i, new Admin(data.get(i).getNama(), data.get(i).getGender(), data.get(i).getJabatan(), data.get(i).getId(), (data.get(i).getGaji() + (gaji * 5)/ 100)));
-									count++;
-								}
-								scan.nextLine();
-							}
-						}
-					}
-				}
+				System.out.println("Berhasil mengupdate karyawan dengan id "+ id);
 			}
-			
-			System.out.println("Berhasil mengupdate karyawan dengan id "+ id);
 		}
-		
-		
 	}
 	
 	void deleteKaryawan() {
 		if(data.isEmpty()) {
-			System.out.println("Data Kosong");
+			empty();
 		}
 		else {
 			display();
+			int nomor;
+			System.out.print("Input nomor urutan karyawan yang ingin dihapus: ");
+			nomor = scan.nextInt();
+			nomor -= 1;
+			System.out.println("Karyawan dengan kode "+ data.get(nomor).getId() + " berhasil dihapus");
+			data.remove(nomor);
 		}
-		int nomor;
-		System.out.print("Input nomor urutan karyawan yang ingin dihapus: ");
-		nomor = scan.nextInt();
-		nomor -= 1;
-		System.out.println("Karyawan dengan kode "+ data.get(nomor).getId() + " berhasil dihapus");
-		data.remove(nomor);
+		
 	}
 	
 	public Main() {
